@@ -13,7 +13,7 @@
 
     <!-- Data -->
     <div class="text-center text-muted text-sm py-2 border-b border-gray-200">
-      7 de Janeiro, 2019
+      {{ releaseDate }}
     </div>
 
     <!-- Info do filme -->
