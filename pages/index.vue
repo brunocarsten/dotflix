@@ -34,7 +34,6 @@
 </template>
 
 <script setup lang="ts">
-import type { Movie } from "@/types"
 const search = inject("searchTerm") as Ref<string>
 const config = useRuntimeConfig()
 const page = ref(1)
@@ -124,5 +123,20 @@ async function loadMore() {
 watch(search, async () => {
   page.value = 1
   await fetchMovies(true)
+})
+
+useSeoMeta({
+  title: "DOTFlix - Sua loja de filmes",
+  description:
+    "Compre filmes incríveis na DOTFlix. A melhor seleção de filmes online.",
+  ogTitle: "DOTFlix - Sua loja de filmes",
+  ogDescription:
+    "Compre filmes incríveis na DOTFlix. A melhor seleção de filmes online.",
+  ogImage: "/og-image.png",
+  ogUrl: "https://dotflix.vercel.app",
+  twitterTitle: "DOTFlix - Sua loja de filmes",
+  twitterDescription: "Compre filmes incríveis na DOTFlix.",
+  twitterImage: "/og-image-home.png",
+  twitterCard: "summary_large_image",
 })
 </script>

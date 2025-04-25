@@ -209,6 +209,19 @@ const fechtAddress = async () => {
     cepStatus.value = "error"
   }
 }
+
+useSeoMeta({
+  title: "Finalizar Compra | DOTFlix",
+  description: "Revise seu pedido e finalize sua compra na DOTFlix.",
+  ogTitle: "Finalizar Compra | DOTFlix",
+  ogDescription: "Revise seu pedido e finalize sua compra na DOTFlix.",
+  ogImage: "/og-image.png",
+  ogUrl: "https://dotflix.vercel.app//checkout",
+  twitterTitle: "Finalizar Compra | DOTFlix",
+  twitterDescription: "Revise seu pedido e finalize sua compra na DOTFlix.",
+  twitterImage: "/og-image.png",
+  twitterCard: "summary_large_image",
+})
 </script>
 
 <style scoped>

@@ -24,5 +24,15 @@ export default defineNuxtConfig({
       tmdbApiKey: process.env.TMDB_API_KEY,
       access_token: process.env.ACCESS_TOKEN,
     }
+  },
+  nitro: {
+    externals: {
+      inline: ['vue'],
+    },
+  },
+  vite: {
+    optimizeDeps: {
+      include: ['vue']
+    }
   }
 })
