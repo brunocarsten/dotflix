@@ -28,6 +28,7 @@
 
     <button
       class="w-full py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-600 transition rounded-b-lg"
+      @click="addToCart"
     >
       Adicionar
     </button>
@@ -35,7 +36,8 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+const { id, title, poster, price } = defineProps<{
+  id: number
   title: string
   rating: number
   genre: string
@@ -45,4 +47,15 @@ defineProps<{
 }>()
 
 const placeholder = "https://via.placeholder.com/300x450?text=Sem+Imagem"
+
+const cart = useCartStore()
+
+const addToCart = () => {
+  cart.addItem({
+    id,
+    title,
+    poster,
+    price,
+  })
+}
 </script>

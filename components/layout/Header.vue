@@ -25,12 +25,12 @@
         <button class="relative">
           <Icon icon="mdi:heart-outline" class="w-6 h-6 text-white" />
         </button>
-        <button class="relative">
+        <button class="relative" @click="$emit('toggle-cart')">
           <Icon icon="mdi:cart-outline" class="w-6 h-6 text-light" />
           <span
             class="absolute -top-2 -right-2 bg-danger text-xs text-white w-5 h-5 rounded-full flex items-center justify-center"
           >
-            {{ cartCount }}
+            {{ cart.items.length }}
           </span>
         </button>
       </div>
@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-// Aqui você pode conectar com o store (Vuex/Pinia)
 const search = ref("")
-const cartCount = ref(2) // mock inicial
+const cart = useCartStore()
+defineEmits(["toggle-cart"])
 </script>

@@ -9,6 +9,7 @@
       >
         <MovieCard
           v-for="movie in movies"
+          :id="movie.id"
           :key="movie.id"
           :title="movie.title"
           :rating="movie.vote_average"
