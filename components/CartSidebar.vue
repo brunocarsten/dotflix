@@ -12,7 +12,7 @@
           <h2 class="text-lg font-bold text-white">Meu Carrinho</h2>
           <button
             @click="cart.items = []"
-            class="text-indigo-500 text-sm hover:underline"
+            class="text-indigo-400 text-md font-bold hover:underline"
           >
             Esvaziar
           </button>
