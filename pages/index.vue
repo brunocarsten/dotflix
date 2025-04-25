@@ -18,6 +18,15 @@
           :price="29.9"
           :poster="movie.poster_path"
         />
+        <MovieCardSkeleton
+          v-if="loading"
+          v-for="i in 4"
+          :key="'skeleton-' + i"
+        />
+        <div ref="loadTrigger" class="h-1" />
+        <div class="text-center text-muted text-sm py-4" v-if="allLoaded">
+          Todos os filmes foram carregados.
+        </div>
       </div>
     </section>
   </UiContainer>
@@ -25,15 +34,53 @@
 
 <script setup lang="ts">
 const config = useRuntimeConfig()
+const movies = ref<any[]>([])
+const page = ref(1)
+const loading = ref(false)
+const allLoaded = ref(false)
+const loadTrigger = ref<HTMLElement | null>(null)
 
-const { data: moviesData } = await useFetch<any>(
-  `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1`,
-  {
+const { data: initialData } = await useAsyncData<any>("movies", () =>
+  $fetch(`https://api.themoviedb.org/3/movie/popular`, {
     headers: {
       Authorization: `Bearer ${config.public.access_token}`,
     },
-  }
+    query: {
+      language: "pt-BR",
+      page: page.value,
+    },
+  })
 )
+movies.value = initialData.value?.results ?? []
+page.value++
+
+const fetchMovies = async () => {
+  if (loading.value || allLoaded.value) return
+  loading.value = true
+
+  const { data } = await useFetch<any>(
+    `https://api.themoviedb.org/3/movie/popular`,
+    {
+      query: {
+        language: "en",
+        page: page.value,
+      },
+      headers: {
+        Authorization: `Bearer ${config.public.access_token}`,
+      },
+    }
+  )
+
+  const results = data.value?.results ?? []
+  if (results.length === 0) {
+    allLoaded.value = true
+  } else {
+    movies.value.push(...results)
+    page.value++
+  }
+
+  loading.value = false
+}
 
 const { data: genresData } = await useFetch<any>(
   "https://api.themoviedb.org/3/genre/movie/list?language=pt-BR",
@@ -44,7 +91,6 @@ const { data: genresData } = await useFetch<any>(
   }
 )
 
-const movies = computed<any>(() => moviesData.value?.results || [])
 const genreMap = computed(() => {
   const map = new Map<number, string>()
   genresData.value?.genres?.forEach((genre: { id: number; name: string }) => {
@@ -61,4 +107,21 @@ const formatDate = (date: string) => {
   }
   return new Date(date).toLocaleDateString("pt-BR", options)
 }
+
+onMounted(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        fetchMovies()
+      }
+    },
+    { threshold: 1.0 }
+  )
+
+  if (loadTrigger.value) observer.observe(loadTrigger.value)
+
+  onBeforeUnmount(() => {
+    if (loadTrigger.value) observer.unobserve(loadTrigger.value)
+  })
+})
 </script>
