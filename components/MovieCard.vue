@@ -1,14 +1,22 @@
 <template>
   <div
-    class="bg-secondary rounded-xl shadow-md border border-gray-700 overflow-hidden w-full sm:w-[18rem] flex flex-col transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg"
+    class="relative bg-secondary rounded-xl shadow-md border border-gray-700 overflow-hidden w-full sm:w-[18rem] flex flex-col transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg"
   >
-    <!-- Imagem com zoom -->
+    <button
+      @click.stop="toggleFavorite"
+      class="absolute top-2 right-2 p-1 bg-black/50 rounded-full"
+    >
+      <Icon
+        :icon="favorites.isFavorited(id) ? 'mdi:heart' : 'mdi:heart-outline'"
+        class="w-5 h-5 text-red-500"
+      />
+    </button>
     <div class="overflow-hidden group">
       <img
         :src="`https://image.tmdb.org/t/p/w500${poster}`"
         :alt="title"
         loading="lazy"
-        class="h-60 w-full object-cover transition-transform duration-300 group-hover:scale-105 rounded-t-xl"
+        class="h-60 w-full object-cover rounded-t-xl"
       />
     </div>
 
@@ -57,13 +65,13 @@ const { id, title, poster, price } = defineProps<{
 const placeholder = "https://via.placeholder.com/300x450?text=Sem+Imagem"
 
 const cart = useCartStore()
+const favorites = useFavoritesStore()
 
-const addToCart = () => {
-  cart.addItem({
-    id,
-    title,
-    poster,
-    price,
-  })
+const toggleFavorite = () => {
+  if (favorites.isFavorited(id)) {
+    favorites.remove(id)
+  } else {
+    favorites.add({ id, title, poster, price })
+  }
 }
 </script>

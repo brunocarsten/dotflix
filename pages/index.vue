@@ -36,7 +36,6 @@
 <script setup lang="ts">
 const search = inject("searchTerm") as Ref<string>
 const config = useRuntimeConfig()
-// const movies = ref<any[]>([])
 const page = ref(1)
 const loading = ref(false)
 const allLoaded = ref(false)
@@ -62,20 +61,6 @@ const {
   }
 )
 const movies = computed(() => moviesData.value?.results || [])
-
-// const { data: initialData } = await useAsyncData<any>("movies", () =>
-//   $fetch(`https://api.themoviedb.org/3/movie/popular`, {
-//     headers: {
-//       Authorization: `Bearer ${config.public.access_token}`,
-//     },
-//     query: {
-//       language: "pt-BR",
-//       page: page.value,
-//     },
-//   })
-// )
-// movies.value = initialData.value?.results ?? []
-// page.value++
 
 const fetchMovies = async () => {
   if (loading.value || allLoaded.value) return

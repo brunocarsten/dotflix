@@ -26,7 +26,7 @@
 
       <!-- Ações -->
       <div class="flex items-center gap-4">
-        <button class="relative">
+        <button class="relative" @click="$emit('toggle-favorites')">
           <Icon icon="mdi:heart-outline" class="w-6 h-6 text-white" />
         </button>
         <button class="relative" @click="$emit('toggle-cart')">
@@ -43,10 +43,10 @@
 </template>
 
 <script setup lang="ts">
+defineEmits(["toggle-cart", "toggle-favorites"])
 const search = defineModel<string>("search", {
   default: "",
 })
 
 const cart = useCartStore()
-defineEmits(["toggle-cart"])
 </script>
