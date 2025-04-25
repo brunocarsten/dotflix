@@ -42,8 +42,11 @@
   </header>
 </template>
 
-<script setup>
-const search = ref("")
+<script setup lang="ts">
+const search = defineModel<string>("search", {
+  default: "",
+})
+
 const cart = useCartStore()
 defineEmits(["toggle-cart"])
 </script>

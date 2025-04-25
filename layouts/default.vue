@@ -1,6 +1,10 @@
 <template>
   <div class="relative bg-primary text-light min-h-screen">
-    <LayoutHeader @toggle-cart="isCartOpen = !isCartOpen" />
+    <LayoutHeader
+      @toggle-cart="isCartOpen = !isCartOpen"
+      v-model:search="searchTerm"
+    />
+
     <main>
       <NuxtPage />
     </main>
@@ -20,6 +24,9 @@
 
 <script setup lang="ts">
 const isCartOpen = ref(false)
+
+const searchTerm = ref("")
+provide("searchTerm", searchTerm) // para acessar no index.vue
 </script>
 
 <style>
