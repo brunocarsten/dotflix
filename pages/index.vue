@@ -15,6 +15,7 @@
           :genre="'Filme'"
           :releaseDate="formatDate(movie.release_date)"
           :price="29.9"
+          :poster="movie.poster_path"
         />
       </div>
     </section>
