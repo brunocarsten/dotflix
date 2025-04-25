@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss'],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt'],
   tailwindcss: {
     config: {
       theme: {
@@ -19,4 +19,10 @@ export default defineNuxtConfig({
       },
     },
   },
+  runtimeConfig: {
+    public: {
+      tmdbApiKey: process.env.TMDB_API_KEY,
+      access_token: process.env.ACCESS_TOKEN,
+    }
+  }
 })

@@ -1,48 +1,70 @@
 <template>
   <div
-    class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden w-full sm:w-[18rem]"
+    class="relative bg-secondary rounded-xl shadow-md border border-gray-700 overflow-hidden w-full sm:w-[18rem] flex flex-col transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg"
   >
-    <!-- Parte superior (imagem + ícone de favorito) -->
-    <div class="relative bg-gray-100 h-40 flex items-center justify-center">
-      <Icon
-        icon="mdi:heart"
-        class="absolute top-2 right-2 w-5 h-5 text-muted cursor-pointer"
-      />
-      <Icon icon="mdi:image-outline" class="w-12 h-12 text-gray-400" />
-    </div>
-
-    <!-- Data -->
-    <div class="text-center text-muted text-sm py-2 border-b border-gray-200">
-      7 de Janeiro, 2019
-    </div>
-
-    <!-- Info do filme -->
-    <div class="p-4 text-center space-y-1">
-      <p class="font-bold text-gray-800">Nome do Filme</p>
-      <div class="flex items-center justify-center gap-1 text-sm text-gray-600">
-        <Icon icon="mdi:star" class="w-4 h-4 text-yellow-400" />
-        <span class="font-medium">7</span>
-        <span class="mx-1">·</span>
-        <span>Gênero</span>
-      </div>
-      <p class="text-gray-700 text-sm">R$ 79,99</p>
-    </div>
-
-    <!-- Botão -->
     <button
-      class="w-full py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-600 transition rounded-b-lg"
+      @click.stop="toggleFavorite"
+      class="absolute top-2 right-2 p-1 bg-black/50 rounded-full"
     >
-      Adicionar
+      <Icon
+        :icon="favorites.isFavorited(id) ? 'mdi:heart' : 'mdi:heart-outline'"
+        class="w-5 h-5 text-red-500"
+      />
+    </button>
+    <div class="overflow-hidden group">
+      <img
+        :src="`https://image.tmdb.org/t/p/w500${poster}`"
+        :alt="title"
+        loading="lazy"
+        class="h-60 w-full object-cover rounded-t-xl"
+      />
+    </div>
+
+    <div class="text-center text-muted text-sm py-2 border-b border-gray-700">
+      {{ releaseDate }}
+    </div>
+
+    <div class="p-4 text-center space-y-1 flex-1">
+      <p class="text-lg font-semibold text-light tracking-tight line-clamp-2">
+        {{ title }}
+      </p>
+      <div class="flex items-center justify-center gap-1 text-sm text-muted">
+        <Icon icon="mdi:star" class="w-4 h-4 text-yellow-400" />
+        <span class="font-medium">{{ rating?.toFixed(1) }}</span>
+        <span class="mx-1">·</span>
+        <span class="truncate">{{ genre }}</span>
+      </div>
+      <p class="text-green-400 text-sm">
+        R$ {{ price.toFixed(2).replace(".", ",") }}
+      </p>
+    </div>
+
+    <button
+      @click.stop="cart.addItem({ id, title, poster, price })"
+      :disabled="isInCart(id)"
+      class="w-full mt-2 py-2 rounded-lg font-semibold transition bg-indigo-500 text-white hover:bg-indigo-600 disabled:bg-gray-600 disabled:cursor-not-allowed"
+    >
+      {{ isInCart(id) ? "No carrinho" : "Adicionar" }}
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  title: string
-  rating: number
-  genre: string
-  releaseDate: string
-  price: number
-}>()
+import type { Movie } from "@/types"
+const { id, title, poster, price } = defineProps<Movie>()
+
+const cart = useCartStore()
+const favorites = useFavoritesStore()
+
+function isInCart(id: number) {
+  return cart.items.some((item) => item.id === id)
+}
+
+const toggleFavorite = () => {
+  if (favorites.isFavorited(id)) {
+    favorites.remove(id)
+  } else {
+    favorites.add({ id, title, poster, price })
+  }
+}
 </script>
