@@ -34,60 +34,41 @@
 </template>
 
 <script setup lang="ts">
+import type { Movie } from "@/types"
 const search = inject("searchTerm") as Ref<string>
 const config = useRuntimeConfig()
 const page = ref(1)
+const pending = ref(false)
 const loading = ref(false)
 const allLoaded = ref(false)
 const loadTrigger = ref<HTMLElement | null>(null)
+const movies = ref<any>([])
 
-const {
-  data: moviesData,
-  refresh,
-  status,
-} = await useFetch<any>(
-  () => {
-    const query = search?.value?.trim()
+async function fetchMovies(reset = false) {
+  pending.value = true
 
-    return query
-      ? `https://api.themoviedb.org/3/search/movie?query=${query}&language=pt-BR`
-      : `https://api.themoviedb.org/3/movie/popular?language=pt-BR&page=1`
-  },
-  {
+  const config = useRuntimeConfig()
+  const query = search.value?.trim()
+
+  const url = query
+    ? `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(
+        query
+      )}&language=pt-BR&page=${page.value}`
+    : `https://api.themoviedb.org/3/movie/popular?language=pt-BR&page=${page.value}`
+
+  const { data } = await useFetch<any>(url, {
     headers: {
       Authorization: `Bearer ${config.public.access_token}`,
     },
-    watch: [search],
-  }
-)
-const movies = computed(() => moviesData.value?.results || [])
+  })
 
-const fetchMovies = async () => {
-  if (loading.value || allLoaded.value) return
-  loading.value = true
-
-  const { data } = await useFetch<any>(
-    `https://api.themoviedb.org/3/movie/popular`,
-    {
-      query: {
-        language: "en",
-        page: page.value,
-      },
-      headers: {
-        Authorization: `Bearer ${config.public.access_token}`,
-      },
-    }
-  )
-
-  const results = data.value?.results ?? []
-  if (results.length === 0) {
-    allLoaded.value = true
+  if (reset) {
+    movies.value = data.value?.results || []
   } else {
-    movies.value.push(...results)
-    page.value++
+    movies.value = [...movies.value, ...(data.value?.results || [])]
   }
 
-  loading.value = false
+  pending.value = false
 }
 
 const { data: genresData } = await useFetch<any>(
@@ -120,7 +101,7 @@ onMounted(() => {
   const observer = new IntersectionObserver(
     (entries) => {
       if (entries[0].isIntersecting) {
-        fetchMovies()
+        loadMore()
       }
     },
     { threshold: 1.0 }
@@ -131,5 +112,17 @@ onMounted(() => {
   onBeforeUnmount(() => {
     if (loadTrigger.value) observer.unobserve(loadTrigger.value)
   })
+})
+
+async function loadMore() {
+  if (pending.value) return
+
+  page.value++
+  await fetchMovies(false)
+}
+
+watch(search, async () => {
+  page.value = 1
+  await fetchMovies(true)
 })
 </script>

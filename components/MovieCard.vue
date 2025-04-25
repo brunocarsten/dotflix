@@ -32,7 +32,7 @@
       </p>
       <div class="flex items-center justify-center gap-1 text-sm text-muted">
         <Icon icon="mdi:star" class="w-4 h-4 text-yellow-400" />
-        <span class="font-medium">{{ rating.toFixed(1) }}</span>
+        <span class="font-medium">{{ rating?.toFixed(1) }}</span>
         <span class="mx-1">·</span>
         <span class="truncate">{{ genre }}</span>
       </div>
@@ -53,15 +53,8 @@
 </template>
 
 <script setup lang="ts">
-const { id, title, poster, price } = defineProps<{
-  id: number
-  title: string
-  rating: number
-  genre: string
-  releaseDate: string
-  price: number
-  poster: string
-}>()
+import type { Movie } from "@/types"
+const { id, title, poster, price } = defineProps<Movie>()
 
 const placeholder = "https://via.placeholder.com/300x450?text=Sem+Imagem"
 
