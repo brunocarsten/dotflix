@@ -119,7 +119,9 @@
           </li>
         </ul>
 
-        <div class="flex justify-between font-semibold text-lg text-light mb-4">
+        <div
+          class="flex justify-between font-semibold text-3xl text-light mb-4"
+        >
           <span>Total:</span>
           <span>R$ {{ cart.total.toFixed(2).replace(".", ",") }}</span>
         </div>
