@@ -10,12 +10,21 @@
         <!-- Cabeçalho -->
         <div class="flex items-center justify-between mb-4">
           <h2 class="text-lg font-bold text-white">Meu Carrinho</h2>
-          <button
-            @click="cart.items = []"
-            class="text-indigo-400 text-md font-bold hover:underline"
-          >
-            Esvaziar
-          </button>
+          <div class="flex items-center gap-2">
+            <button
+              @click="cart.items = []"
+              class="text-indigo-400 text-md font-bold hover:underline"
+            >
+              Esvaziar
+            </button>
+            <button
+              @click="$emit('close')"
+              class="text-gray-300 hover:text-white text-xl font-bold px-2"
+              aria-label="Fechar carrinho"
+            >
+              ×
+            </button>
+          </div>
         </div>
 
         <!-- Lista de itens -->
@@ -68,6 +77,7 @@
 
 <script setup lang="ts">
 defineProps<{ isOpen: boolean }>()
+defineEmits(["close"])
 
 const cart = useCartStore()
 </script>
