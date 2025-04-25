@@ -43,10 +43,11 @@
 
     <!-- Botão -->
     <button
-      class="w-full py-2 bg-indigo-500 text-white font-semibold hover:bg-indigo-600 active:scale-95 transition rounded-b-xl"
-      @click="cart.addItem({ id, title, poster, price })"
+      @click.stop="cart.addItem({ id, title, poster, price })"
+      :disabled="isInCart(id)"
+      class="w-full mt-2 py-2 rounded-lg font-semibold transition bg-indigo-500 text-white hover:bg-indigo-600 disabled:bg-gray-600 disabled:cursor-not-allowed"
     >
-      Adicionar
+      {{ isInCart(id) ? "No carrinho" : "Adicionar" }}
     </button>
   </div>
 </template>
@@ -66,6 +67,10 @@ const placeholder = "https://via.placeholder.com/300x450?text=Sem+Imagem"
 
 const cart = useCartStore()
 const favorites = useFavoritesStore()
+
+function isInCart(id: number) {
+  return cart.items.some((item) => item.id === id)
+}
 
 const toggleFavorite = () => {
   if (favorites.isFavorited(id)) {

@@ -38,13 +38,13 @@
             <div class="flex flex-col gap-1">
               <button
                 @click="cart.addItem(item)"
-                class="text-xs text-success hover:underline"
+                class="text-xs text-white bg-success font-bold px-2 py-1 rounded hover:bg-green-800"
               >
                 + Carrinho
               </button>
               <button
                 @click="favorites.remove(item.id)"
-                class="text-xs text-danger hover:underline"
+                class="text-xs text-red-500 hover:underline px-2 py-1"
               >
                 Remover
               </button>
