@@ -20,12 +20,10 @@
       />
     </div>
 
-    <!-- Data -->
     <div class="text-center text-muted text-sm py-2 border-b border-gray-700">
       {{ releaseDate }}
     </div>
 
-    <!-- Info -->
     <div class="p-4 text-center space-y-1 flex-1">
       <p class="text-lg font-semibold text-light tracking-tight line-clamp-2">
         {{ title }}
@@ -41,7 +39,6 @@
       </p>
     </div>
 
-    <!-- Botão -->
     <button
       @click.stop="cart.addItem({ id, title, poster, price })"
       :disabled="isInCart(id)"
@@ -55,8 +52,6 @@
 <script setup lang="ts">
 import type { Movie } from "@/types"
 const { id, title, poster, price } = defineProps<Movie>()
-
-const placeholder = "https://via.placeholder.com/300x450?text=Sem+Imagem"
 
 const cart = useCartStore()
 const favorites = useFavoritesStore()

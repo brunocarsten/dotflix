@@ -3,14 +3,12 @@
     class="fixed top-0 left-0 w-full z-50 bg-secondary/90 backdrop-blur-md text-light py-4 px-6 shadow-md border-b border-gray-800"
   >
     <div class="container mx-auto flex items-center justify-between gap-4">
-      <!-- Logo -->
       <NuxtLink to="/">
         <div class="text-2xl font-bold">
           <span class="text-success">DOT</span>Flix
         </div>
       </NuxtLink>
 
-      <!-- Campo de busca -->
       <div class="relative w-full max-w-xl">
         <Icon
           icon="mdi:magnify"
@@ -24,7 +22,6 @@
         />
       </div>
 
-      <!-- Ações -->
       <div class="flex items-center gap-4">
         <button class="relative" @click="$emit('toggle-favorites')">
           <Icon icon="mdi:heart-outline" class="w-6 h-6 text-white" />

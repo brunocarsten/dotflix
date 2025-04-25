@@ -7,7 +7,6 @@
       <aside
         class="rounded-xl w-full bg-gray-700 shadow-lg p-4 flex flex-col h-full"
       >
-        <!-- Cabeçalho -->
         <div class="flex items-center justify-between mb-4">
           <h2 class="text-lg font-bold text-white">Meu Carrinho</h2>
           <div class="flex items-center gap-2">
@@ -27,7 +26,6 @@
           </div>
         </div>
 
-        <!-- Lista de itens -->
         <ul class="flex-1 space-y-4 overflow-y-auto">
           <li
             v-for="item in cart.items"
@@ -56,7 +54,6 @@
           </li>
         </ul>
 
-        <!-- Rodapé -->
         <div class="pt-4 border-t mt-4">
           <p class="text-sm mb-2 text-right">
             <span class="font-medium text-white">Total:</span>
