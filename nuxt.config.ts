@@ -20,10 +20,8 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    public: {
-      tmdbApiKey: process.env.TMDB_API_KEY,
-      access_token: process.env.ACCESS_TOKEN,
-    }
+    tmdbApiKey: process.env.TMDB_API_KEY,
+    access_token: process.env.ACCESS_TOKEN,
   },
   nitro: {
     externals: {

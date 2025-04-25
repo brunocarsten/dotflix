@@ -14,6 +14,13 @@
           >
             Esvaziar
           </button>
+          <button
+            @click="isOpen = false"
+            class="text-gray-300 hover:text-white text-xl font-bold px-2"
+            aria-label="Fechar favoritos"
+          >
+            ×
+          </button>
         </div>
 
         <!-- Lista -->

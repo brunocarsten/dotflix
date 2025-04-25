@@ -46,20 +46,13 @@ const movies = ref<any>([])
 async function fetchMovies(reset = false) {
   pending.value = true
 
-  const config = useRuntimeConfig()
   const query = search.value?.trim()
 
   const url = query
-    ? `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(
-        query
-      )}&language=pt-BR&page=${page.value}`
-    : `https://api.themoviedb.org/3/movie/popular?language=pt-BR&page=${page.value}`
+    ? `/api/movies/search?query=${encodeURIComponent(query)}&page=${page.value}`
+    : `/api/movies/popular?page=${page.value}`
 
-  const { data } = await useFetch<any>(url, {
-    headers: {
-      Authorization: `Bearer ${config.public.access_token}`,
-    },
-  })
+  const { data } = await useFetch<any>(url)
 
   if (reset) {
     movies.value = data.value?.results || []
@@ -70,14 +63,7 @@ async function fetchMovies(reset = false) {
   pending.value = false
 }
 
-const { data: genresData } = await useFetch<any>(
-  "https://api.themoviedb.org/3/genre/movie/list?language=pt-BR",
-  {
-    headers: {
-      Authorization: `Bearer ${config.public.access_token}`,
-    },
-  }
-)
+const { data: genresData } = await useFetch<any>("/api/movies/genres")
 
 const genreMap = computed(() => {
   const map = new Map<number, string>()
