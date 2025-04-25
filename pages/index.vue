@@ -12,7 +12,7 @@
           :key="movie.id"
           :title="movie.title"
           :rating="movie.vote_average"
-          :genre="'Filme'"
+          :genre="genreMap.get(movie.genre_ids[0]) ?? 'Gênero'"
           :releaseDate="formatDate(movie.release_date)"
           :price="29.9"
           :poster="movie.poster_path"
@@ -34,7 +34,23 @@ const { data: moviesData } = await useFetch<any>(
   }
 )
 
+const { data: genresData } = await useFetch<any>(
+  "https://api.themoviedb.org/3/genre/movie/list?language=pt-BR",
+  {
+    headers: {
+      Authorization: `Bearer ${config.public.access_token}`,
+    },
+  }
+)
+
 const movies = computed<any>(() => moviesData.value?.results || [])
+const genreMap = computed(() => {
+  const map = new Map<number, string>()
+  genresData.value?.genres?.forEach((genre: { id: number; name: string }) => {
+    map.set(genre.id, genre.name)
+  })
+  return map
+})
 
 const formatDate = (date: string) => {
   const options: Intl.DateTimeFormatOptions = {
