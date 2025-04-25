@@ -11,7 +11,7 @@
             class="fixed inset-0 bg-black/50 z-40"
             @click="isCartOpen = false"
           />
-          <CartSidebar :isOpen="isCartOpen" @close="isCartOpen = false" />
+          <CartSidebar v-model:isOpen="isCartOpen" />
         </div>
       </Transition>
     </Teleport>

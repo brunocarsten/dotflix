@@ -2,7 +2,7 @@
   <Transition name="slide">
     <div
       v-if="isOpen"
-      class="fixed inset-y-0 right-0 z-50 w-full max-w-lg p-4 flex flex-col"
+      class="fixed inset-y-0 right-0 z-[9999] w-full max-w-lg p-4 flex flex-col"
     >
       <aside
         class="rounded-xl w-full bg-gray-700 shadow-lg p-4 flex flex-col h-full"
@@ -18,7 +18,7 @@
               Esvaziar
             </button>
             <button
-              @click="$emit('close')"
+              @click="isOpen = false"
               class="text-gray-300 hover:text-white text-xl font-bold px-2"
               aria-label="Fechar carrinho"
             >
@@ -88,8 +88,7 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{ isOpen: boolean }>()
-defineEmits(["close"])
+const isOpen = defineModel<boolean>("isOpen")
 
 const cart = useCartStore()
 const showTooltip = ref(false)
@@ -102,7 +101,8 @@ const goToCheckout = () => {
     }, 2500)
     return
   }
-  // Redirecionar para a página de checkout
+
+  isOpen.value = false
   return navigateTo("/checkout")
 }
 </script>

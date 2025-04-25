@@ -1,5 +1,5 @@
 <template>
-  <UiContainer class="py-8">
+  <UiContainer class="py-24">
     <h1 class="text-2xl font-bold mb-6">Finalizar Compra</h1>
 
     <div class="grid md:grid-cols-2 gap-8">
@@ -110,6 +110,12 @@
             <span class="text-sm text-light">
               R$ {{ item.price.toFixed(2).replace(".", ",") }}
             </span>
+            <button
+              @click="cart.removeItem(item.id)"
+              class="text-white bg-red-600 hover:bg-red-700 text-xs px-2 py-1 rounded transition"
+            >
+              Remover
+            </button>
           </li>
         </ul>
 
