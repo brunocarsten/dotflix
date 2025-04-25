@@ -1,5 +1,5 @@
 <template>
-  <UiContainer>
+  <UiContainer class="pt-24">
     <section class="py-8">
       <div class="flex items-center justify-between mb-4">
         <h1 class="text-2xl font-bold">Filmes</h1>

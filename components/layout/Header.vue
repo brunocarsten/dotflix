@@ -1,5 +1,7 @@
 <template>
-  <header class="bg-secondary text-light py-4 px-6 shadow-md">
+  <header
+    class="fixed top-0 left-0 w-full z-50 bg-secondary/90 backdrop-blur-md text-light py-4 px-6 shadow-md border-b border-gray-800"
+  >
     <div class="container mx-auto flex items-center justify-between gap-4">
       <!-- Logo -->
       <NuxtLink to="/">
