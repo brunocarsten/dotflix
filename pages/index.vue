@@ -18,7 +18,7 @@
           :price="29.9"
           :poster="movie.poster_path"
         />
-        <MovieCardSkeleton
+        <UiMovieCardSkeleton
           v-if="loading"
           v-for="i in 4"
           :key="'skeleton-' + i"

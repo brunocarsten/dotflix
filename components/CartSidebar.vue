@@ -64,11 +64,12 @@
               R$ {{ cart.total.toFixed(2).replace(".", ",") }}
             </span>
           </p>
-          <button
-            class="w-full bg-indigo-500 text-white font-semibold py-2 rounded hover:bg-indigo-600 transition"
+          <NuxtLink
+            to="/checkout"
+            class="block text-center w-full bg-indigo-500 text-white font-semibold py-2 rounded hover:bg-indigo-600 transition"
           >
             Finalizar compra
-          </button>
+          </NuxtLink>
         </div>
       </aside>
     </div>

@@ -20,4 +20,6 @@ export const useCartStore = defineStore('cart', () => {
     removeItem,
     total,
   }
+}, {
+  persist: true
 })

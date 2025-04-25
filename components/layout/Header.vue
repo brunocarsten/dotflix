@@ -2,9 +2,11 @@
   <header class="bg-secondary text-light py-4 px-6 shadow-md">
     <div class="container mx-auto flex items-center justify-between gap-4">
       <!-- Logo -->
-      <div class="text-2xl font-bold">
-        <span class="text-success">DOT</span>Flix
-      </div>
+      <NuxtLink to="/">
+        <div class="text-2xl font-bold">
+          <span class="text-success">DOT</span>Flix
+        </div>
+      </NuxtLink>
 
       <!-- Campo de busca -->
       <div class="relative w-full max-w-xl">
