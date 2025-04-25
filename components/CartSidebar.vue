@@ -64,12 +64,23 @@
               R$ {{ cart.total.toFixed(2).replace(".", ",") }}
             </span>
           </p>
-          <NuxtLink
-            to="/checkout"
-            class="block text-center w-full bg-indigo-500 text-white font-semibold py-2 rounded hover:bg-indigo-600 transition"
-          >
-            Finalizar compra
-          </NuxtLink>
+          <div class="relative w-full flex flex-col items-center">
+            <transition name="fade">
+              <div
+                v-if="showTooltip"
+                class="absolute bottom-full mb-2 bg-red-500 text-white text-xs px-3 py-1 rounded shadow z-10 whitespace-nowrap"
+              >
+                Adicione um produto ao carrinho
+              </div>
+            </transition>
+
+            <button
+              class="w-full bg-indigo-500 text-white font-semibold py-2 rounded hover:bg-indigo-600 transition"
+              @click="goToCheckout"
+            >
+              Finalizar compra
+            </button>
+          </div>
         </div>
       </aside>
     </div>
@@ -81,6 +92,19 @@ defineProps<{ isOpen: boolean }>()
 defineEmits(["close"])
 
 const cart = useCartStore()
+const showTooltip = ref(false)
+
+const goToCheckout = () => {
+  if (cart.items.length === 0) {
+    showTooltip.value = true
+    setTimeout(() => {
+      showTooltip.value = false
+    }, 2500)
+    return
+  }
+  // Redirecionar para a página de checkout
+  return navigateTo("/checkout")
+}
 </script>
 
 <style scoped>
