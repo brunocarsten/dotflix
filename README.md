@@ -91,7 +91,7 @@ Acesse em: [http://localhost:3000](http://localhost:3000)
 
 ## 👤 Desenvolvido por
 
-- **Seu Nome Aqui**
+- **Bruno Carsten de Araújo**
 - [LinkedIn](https://www.linkedin.com/in/bruno-carsten-de-ara%C3%BAjo-244a5a104/)
 - [GitHub](https://github.com/brunocarsten)
 
